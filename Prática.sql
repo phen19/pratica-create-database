@@ -49,7 +49,7 @@ CREATE TABLE bankAccount (
 	"customerId" INTEGER REFERENCES customers(id),
 	"accountNumber" TEXT NOT NULL UNIQUE,
 	agency TEXT NOT NULL,
-	"openDate" DATE NOT NULL,
+	"openDate" DATE NOT NULL DEFAULT NOW(),
 	"closeDate" DATE
 );
 
@@ -72,7 +72,7 @@ CREATE TABLE "creditCards" (
 	id SERIAL NOT NULL PRIMARY KEY,
 	"banckAccountId" INTEGER REFERENCES bankAccount(id),
 	name TEXT NOT NULL,
-	number TEXT NOT NULL,
+	number TEXT NOT NULL UNIQUE,
 	"securityCode" INTEGER NOT NULL,
 	"expirationMonth" INT NOT NULL,
 	"expirationYear" INT NOT NULL,
