@@ -14,7 +14,7 @@ CREATE TYPE type AS ENUM('landline','mobile');
 -- Tabela customersPhones
 CREATE TABLE customersPhones (
 	id SERIAL NOT NULL PRIMARY KEY,
-	"customerId" INTEGER REFERENCES customers(id),
+	"customerId" INTEGER NOT NULL REFERENCES customers(id),
 	number TEXT NOT NULL,
 	type TYPE NOT NULL
 );
@@ -29,24 +29,24 @@ CREATE TABLE states (
 CREATE TABLE cities (
 	id SERIAL NOT NULL PRIMARY KEY,
 	name TEXT NOT NULL,
-	"stateId" INTEGER REFERENCES states(id)
+	"stateId" INTEGER NOT NULL REFERENCES states(id)
 );
 
 -- Tabela customerAddresses
 CREATE TABLE customerAddresses (
 	id SERIAL NOT NULL PRIMARY KEY,
-	"customerId" INTEGER REFERENCES customers(id),
+	"customerId" INTEGER NOT NULL REFERENCES customers(id),
 	street TEXT NOT NULL,
 	number INTEGER NOT NULL,
 	complement TEXT,
 	"postalCode" TEXT NOT NULL,
-	"cityId" INTEGER REFERENCES cities(id)
+	"cityId" INTEGER NOT NULL REFERENCES cities(id)
 );
 
 -- Tabela bankAccount
 CREATE TABLE bankAccount (
 	id SERIAL NOT NULL PRIMARY KEY,
-	"customerId" INTEGER REFERENCES customers(id),
+	"customerId" INTEGER NOT NULL REFERENCES customers(id),
 	"accountNumber" TEXT NOT NULL UNIQUE,
 	agency TEXT NOT NULL,
 	"openDate" DATE NOT NULL DEFAULT NOW(),
@@ -59,7 +59,7 @@ CREATE TYPE "typeTransactions" AS ENUM('deposit','withdraw');
 -- Tabela transactions
 CREATE TABLE transactions (
 	id SERIAL NOT NULL PRIMARY KEY,
-	"banckAccountId" INTEGER REFERENCES bankAccount(id),
+	"banckAccountId" INTEGER NOT NULL REFERENCES bankAccount(id),
 	amount INTEGER NOT NULL,
 	type "typeTransactions" NOT NULL,
 	time TIMESTAMP NOT NULL,
@@ -70,7 +70,7 @@ CREATE TABLE transactions (
 -- Tabela CreditCards
 CREATE TABLE "creditCards" (
 	id SERIAL NOT NULL PRIMARY KEY,
-	"banckAccountId" INTEGER REFERENCES bankAccount(id),
+	"banckAccountId" INTEGER NOT NULL REFERENCES bankAccount(id),
 	name TEXT NOT NULL,
 	number TEXT NOT NULL UNIQUE,
 	"securityCode" INTEGER NOT NULL,
